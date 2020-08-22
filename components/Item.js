@@ -13,12 +13,16 @@ export const Item = (props) => {
     <TouchableHighlight 
     activeOpacity={0.6} 
     underlayColor="#DDDDDD">
-        <View style = {itemStyles.item}> 
+        <View style = { props.status ? itemStyles.itemDone : itemStyles.item }> 
             <View style = {itemStyles.row}>
-            <Text style={itemStyles.text}>{props.task}</Text>
+            <Text style={ props.status ? itemStyles.textDone : itemStyles.text }>{props.task}</Text>
             </View>
-            <TouchableOpacity onPress={ () => {props.delete( props.id ) } }>
-                <Image style ={itemStyles.icon}source={require('../assets/trash-alt-solid.png')}/>
+            
+            <TouchableOpacity onPress={ () => {props.delete( props.id ) } } style={{marginRight:30}}>
+                <Image style ={itemStyles.icon} source={require('../assets/trash-alt-solid.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ () => {props.buttonPressed( props.id ) } } >
+                <Image style={itemStyles.icon} source={require('../assets/check-circle-solid.png')} />
             </TouchableOpacity>
         </View>
     </TouchableHighlight>
@@ -32,12 +36,27 @@ const itemStyles = StyleSheet.create({
         flexDirection: 'row',
         borderStyle: 'solid',
         borderBottomWidth: 1,
-        borderColor: '#dcdcdc'
+        borderColor: '#dcdcdc',
+        opacity: 1,
     
+    },
+    itemDone: {
+        padding: 10,
+        display: 'flex',
+        flexDirection: 'row',
+        borderStyle: 'solid',
+        borderBottomWidth: 1,
+        borderColor: '#dcdcdc',
+        opacity: 0.5,
     },
     text: {
         fontSize:16,
         color: 'black'
+    },
+    textDone: {
+        fontSize: 16,
+        color: 'black',
+        textDecorationLine: 'line-through',
     },
     row: {
         flexDirection: 'row',
